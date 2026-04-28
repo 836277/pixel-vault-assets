@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
 const GITHUB_OWNER = process.env.GITHUB_OWNER || '836277';
 const GITHUB_REPO = process.env.GITHUB_REPO || 'pixel-vault-assets';
-const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'main';
+const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'master';
 const ASSETS_FOLDER = 'assets';
 const MANIFEST_FILE = 'assets.json';
 // ============================
@@ -203,7 +203,12 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-app.listen(PORT, () => {
-  console.log('PixelVault Upload Server running on port ' + PORT);
-  console.log('GitHub repo: ' + GITHUB_OWNER + '/' + GITHUB_REPO);
-});
+// Vercel serverless 模式
+if (process.env.VERCEL === 'true') {
+  module.exports = app;
+} else {
+  app.listen(PORT, () => {
+    console.log('PixelVault Upload Server running on port ' + PORT);
+    console.log('GitHub repo: ' + GITHUB_OWNER + '/' + GITHUB_REPO);
+  });
+}
