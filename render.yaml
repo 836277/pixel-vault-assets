@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: pixel-vault-api
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/assets
+    envVars:
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: GITHUB_OWNER
+        value: "836277"
+      - key: GITHUB_REPO
+        value: "pixel-vault-assets"
+      - key: GITHUB_BRANCH
+        value: "main"
