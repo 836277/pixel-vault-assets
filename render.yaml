@@ -15,4 +15,4 @@ services:
       - key: GITHUB_REPO
         value: "pixel-vault-assets"
       - key: GITHUB_BRANCH
-        value: "main"
+        value: "master"
