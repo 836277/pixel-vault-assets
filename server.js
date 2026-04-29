@@ -158,7 +158,8 @@ app.get('/api/assets', async (req, res) => {
 
 // ========== GitHub API 工具函数 ==========
 
-async function uploadToGithub(filePath, contentBase64, message) {
+async function uploadToGithub(filePath, contentBase64, message, retryCount) {
+  if (retryCount === undefined) retryCount = 0;
   const url = 'https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + encodeURIComponent(filePath);
 
   let sha = null;
@@ -179,9 +180,18 @@ async function uploadToGithub(filePath, contentBase64, message) {
   };
   if (sha) payload.sha = sha;
 
-  await axios.put(url, payload, {
-    headers: { Authorization: 'token ' + GITHUB_TOKEN, Accept: 'application/vnd.github.v3+json' }
-  });
+  try {
+    await axios.put(url, payload, {
+      headers: { Authorization: 'token ' + GITHUB_TOKEN, Accept: 'application/vnd.github.v3+json' }
+    });
+  } catch (e) {
+    // SHA 冲突，重试（最多 3 次）
+    if (e.response && e.response.status === 409 && retryCount < 3) {
+      await new Promise(r => setTimeout(r, 500));
+      return uploadToGithub(filePath, contentBase64, message, retryCount + 1);
+    }
+    throw e;
+  }
 }
 
 async function updateGithubFile(filePath, content, message) {
