@@ -1,5 +1,24 @@
 [
   {
+    "id": "asset_1777444494632",
+    "title": "房改房",
+    "description": "",
+    "type": "free",
+    "sizes": [
+      "8×8",
+      "16×16"
+    ],
+    "category": "maps",
+    "tags": [],
+    "fileName": "Pictures.zip",
+    "fileSize": 24465,
+    "fileType": "application/x-zip-compressed",
+    "fileUrl": "https://cdn.jsdelivr.net/gh/836277/pixel-vault-assets@master/assets/1777444494632-file.zip",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/836277/pixel-vault-assets@master/assets/1777444494632-preview.png",
+    "createdAt": "2026-04-29T06:34:57.440Z",
+    "downloads": 0
+  },
+  {
     "id": "asset_1777444459774",
     "title": "树桩移动图",
     "description": "",
